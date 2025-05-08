@@ -39,8 +39,8 @@ func CreateOSCPacket(address, argument string) []byte {
 	return buf.Bytes()
 }
 
-func SendOSC(host string, port int, commandID string, udp_client net.PacketConn) {
-	packet := CreateOSCPacket("/action", commandID)
+func SendOSC(host string, port int, prefix string, commandID string, udp_client net.PacketConn) {
+	packet := CreateOSCPacket(prefix, commandID)
 
 	address := fmt.Sprintf("%s:%d", host, port)
 

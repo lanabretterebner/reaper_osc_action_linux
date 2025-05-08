@@ -14,6 +14,13 @@
         <div class="sdpi-item-label">Port</div>
         <input class="sdpi-item-value" id="port" value="" placeholder="8000" pattern="\d{1,5}" required>
     </div>
+    <div class="sdpi-item" id="your_target_required" title="Target">
+       <div class="sdpi-item-label">Reaper Target</div>
+       <select class="sdpi-item-value" id="target">
+         <option value="action">Reaper Main</option>
+         <option value="midiaction">MIDI Editor</option>
+       </select>
+     </div>
     <div class="sdpi-item" id="your_command_required" title="Command">
         <div class="sdpi-item-label">Command ID</div>
         <input class="sdpi-item-value" id="command_id" value="" placeholder"40078" required>
@@ -25,6 +32,7 @@
       const host_input       = document.querySelector("input#host");
       const port_input       = document.querySelector("input#port");
       const command_id_input = document.querySelector("input#command_id");
+      const target_select    = document.querySelector("select#target");
 
       window.connectElgatoStreamDeckSocket = function(inPort, inPropertyInspectorUUID, inRegisterEvent, inInfo, inActionInfo) {
         const actionInfo = JSON.parse(inActionInfo);
@@ -39,6 +47,9 @@
         }
         if (settings.command_id) {
           command_id_input.value = settings.command_id;
+        }
+        if (settings.target) {
+          target_select.value = settings.target;
         }
 
         websocket.onopen = function() {
@@ -57,7 +68,7 @@
 
 
         input_wrapper.addEventListener("input", function (e) {
-          if (["host", "port", "command_id"].includes(e.target.id)) {
+          if (["host", "port", "command_id", "target"].includes(e.target.id)) {
 
             const payload = {
               event: "setSettings",
@@ -65,7 +76,8 @@
               payload: {
                 host:       host_input.value,
                 port:       parseInt(port_input.value),
-                command_id: command_id_input.value
+                command_id: command_id_input.value,
+                target:     target_select.value
               }
             };
             websocket.send(JSON.stringify(payload));
