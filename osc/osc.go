@@ -2,9 +2,10 @@ package osc
 
 import (
 	"bytes"
-	"fmt"
+	"encoding/binary"
 	"log"
 	"net"
+	"strconv"
 )
 
 // padString pads a string to a multiple of 4 bytes by adding null bytes (0x00).
@@ -23,34 +24,67 @@ func PadString(input string) []byte {
 	return result
 }
 
-// createOSCPacket constructs the OSC packet with address, type tags, and arguments,
-func CreateOSCPacket(address, argument string) []byte {
+func CreateOSCIntPacket(address string, value int) []byte {
 	var buf bytes.Buffer
-
-	// Write the OSC address (e.g., "/action")
-	buf.Write(PadString(address))
-
-	// Write the OSC type tag (e.g., ",s" for a string argument)
-	buf.Write(PadString(",s"))
-
-	// Write the OSC argument (e.g., "_S&M_INS_MARKER_PLAY")
-	buf.Write(PadString(argument))
-
+	buf.Write(PadString(address)) // "/action" or "/midiaction"
+	buf.Write(PadString(",i"))    // int type tag
+	var b [4]byte
+	binary.BigEndian.PutUint32(b[:], uint32(value))
+	buf.Write(b[:])
 	return buf.Bytes()
 }
 
-func SendOSC(host string, port int, prefix string, commandID string, udp_client net.PacketConn) {
-	packet := CreateOSCPacket(prefix, commandID)
+// Create a “string‐arg” OSC packet: e.g. /action [s] "_S&M_…"
+func CreateOSCStringPacket(address, val string) []byte {
+	var buf bytes.Buffer
+	buf.Write(PadString(address)) // "/action"
+	buf.Write(PadString(",s"))    // string type tag
+	buf.Write(PadString(val))     // the actual command‐ID
+	return buf.Bytes()
+}
 
-	address := fmt.Sprintf("%s:%d", host, port)
+// Create a path‐only OSC packet (no type tags): e.g. "/midiaction/_S&M_…"
+func CreateOSCPathPacket(fullPath string) []byte {
+	// just send the padded address – Reaper will see it as “no args” ([])
+	return PadString(fullPath)
+}
 
-	RemoteAddr, err := net.ResolveUDPAddr("udp", address)
-	if err != nil {
-		log.Printf("Could not resolve address")
+func SendOSC(host string, port int, prefix, commandID string, udp_client net.PacketConn) {
+	var packet []byte
+
+	// 1) main‐window
+	if prefix == "/action" {
+		if n, err := strconv.Atoi(commandID); err == nil {
+			packet = CreateOSCIntPacket(prefix, n)
+		} else {
+			packet = CreateOSCStringPacket(prefix, commandID)
+		}
+
+		// 2) MIDI‐editor
+	} else if prefix == "/midiaction" {
+		if n, err := strconv.Atoi(commandID); err == nil {
+			packet = CreateOSCIntPacket(prefix, n)
+		} else {
+			// MIDI‐editor string commands must be path‐only
+			packet = CreateOSCPathPacket(prefix + "/" + commandID)
+		}
+
+		// 3) fallback (if you ever add other prefixes)
+	} else {
+		if n, err := strconv.Atoi(commandID); err == nil {
+			packet = CreateOSCIntPacket(prefix, n)
+		} else {
+			packet = CreateOSCPathPacket(prefix + "/" + commandID)
+		}
 	}
 
-	_, err = udp_client.WriteTo(packet, RemoteAddr)
+	addr := net.JoinHostPort(host, strconv.Itoa(port))
+	remote, err := net.ResolveUDPAddr("udp", addr)
 	if err != nil {
-		log.Printf("Could not send packet")
+		log.Printf("OSC: bad address %s\n", addr)
+		return
+	}
+	if _, err := udp_client.WriteTo(packet, remote); err != nil {
+		log.Printf("OSC write error: %v\n", err)
 	}
 }
