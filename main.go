@@ -24,6 +24,7 @@ type Settings struct {
 	Host      string `json:"host"`
 	Port      int    `json:"port"`
 	CommandID string `json:"command_id"`
+	Target    string `json:"target"`
 }
 
 // Struct to hold Event data coming from StreamDeck
@@ -62,9 +63,14 @@ func handleEvent(event Event, udp_client net.PacketConn) {
 	host := settings.Host
 	port := settings.Port
 	commandID := settings.CommandID
+	prefix := "/action"
+
+	if settings.Target == "midiaction" {
+		prefix = "/midiaction"
+	}
 
 	log.Printf("Received keyDown event for context %s: Triggering OSC action with Host: %s, Port: %d, Command ID: %s\n", context, host, port, commandID)
-	osc.SendOSC(host, port, commandID, udp_client)
+	osc.SendOSC(host, port, prefix, commandID, udp_client)
 }
 
 func handleWillAppearEvent(event Event) {
@@ -80,6 +86,7 @@ func handleWillAppearEvent(event Event) {
 			Host:      "127.0.0.1",      // default IP
 			Port:      8000,             // default port
 			CommandID: "defaultCommand", // default command
+			Target:    "action",         // default target
 		}
 	}
 }
