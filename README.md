@@ -6,7 +6,7 @@ Demo Video can be found here: https://www.youtube.com/watch?v=DTwFpP6xsbU
 
 ## Installation
 
-###Linux (applicable to this fork in conjunction with opendeck)
+### Linux (applicable to this fork in conjunction with opendeck)
 
 `git clone https://github.com/lanabretterebner/reaper_osc_action_linux`
 
@@ -16,14 +16,6 @@ Demo Video can be found here: https://www.youtube.com/watch?v=DTwFpP6xsbU
 
 then copy the folder named "org.smyck.reaper-osc-action.sdPlugin" into your opendeck plugin folder and restart opendeck.
 
-
-The easiest way to install the plugin is via the [Elgato Marketplace](https://marketplace.elgato.com/product/reaper-osc-action-1bfdb39f-d4b9-4912-b540-b5bcda219de7)
-
-If you prefer a manual install you can download the following file from the latest [release](https://github.com/hukl/reaper_osc_action/releases) here on Github:
-`org.smyck.reaper-osc-action.streamDeckPlugin`
-
-After downloading the file, a simple double click on the file should install it
-in StreamDeck.
 
 ## Building
 
