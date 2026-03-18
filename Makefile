@@ -8,7 +8,7 @@ vet: fmt
 	go vet
 
 build: vet
-	GOOS=linux GOARCH=amd64 go build -o org.smyck.reaper-osc-action.sdPlugin/reaper_osc_action_win-amd64
+	GOOS=linux GOARCH=amd64 go build -o org.smyck.reaper-osc-action.sdPlugin/reaper_osc_action_linux
 
 test:
 	go test ./...
