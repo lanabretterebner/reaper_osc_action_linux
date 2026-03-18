@@ -16,7 +16,8 @@ Demo Video can be found here: https://www.youtube.com/watch?v=DTwFpP6xsbU
 
 then copy the folder named "org.smyck.reaper-osc-action.sdPlugin" into your opendeck plugin folder and restart opendeck.
 
-OR go to releases and just download the folder mentioned before!
+#### OR
+go to releases and just download the folder mentioned before!
 
 
 ## Building
