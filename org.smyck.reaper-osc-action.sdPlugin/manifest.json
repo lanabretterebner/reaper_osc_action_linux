@@ -21,12 +21,7 @@
 	},
 	"OS": [
 		{
-			"Platform": "mac",
-			"MinimumVersion": "10.11"
-		},
-		{
-			"Platform": "windows",
-			"MinimumVersion": "10"
+			"Platform": "linux",
 		}
 	],
 	"Version": "1.0.1.0",
@@ -38,7 +33,5 @@
 	"Category": "Reaper OSC Action",
 	"CategoryIcon": "icons/category_icon",
 	"URL": "https://github.com/hukl/reaper_osc_action",
-	"CodePath": "reaper_osc_action_macos-universal",
-	"CodePathMac": "reaper_osc_action_macos-universal",
-	"CodePathWin": "reaper_osc_action_win-amd64"
+	"CodePath": "reaper_osc_action_linux",
 }
