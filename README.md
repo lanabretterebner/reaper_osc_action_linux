@@ -6,8 +6,6 @@ Demo Video can be found here: https://www.youtube.com/watch?v=DTwFpP6xsbU
 
 ## Installation
 
-### Linux (applicable to this fork)
-
 `git clone https://github.com/lanabretterebner/reaper_osc_action_linux`
 
 `cd reaper_osc_action_linux`
@@ -16,8 +14,8 @@ Demo Video can be found here: https://www.youtube.com/watch?v=DTwFpP6xsbU
 
 then copy the folder named "org.smyck.reaper-osc-action.sdPlugin" into your opendeck plugin folder and restart opendeck.
 
-#### OR
-go to releases and just download the folder mentioned before!
+### OR
+Go to releases and just download the folder mentioned before, unzip and paste it into the plugins folder!
 
 
 ## Building
