@@ -9,9 +9,13 @@ Demo Video can be found here: https://www.youtube.com/watch?v=DTwFpP6xsbU
 ###Linux (applicable to this fork in conjunction with opendeck)
 
 `git clone https://github.com/lanabretterebner/reaper_osc_action_linux`
+
 `cd reaper_osc_action_linux`
+
 `make`
-then copy the folder named "org.smyck.reaper-osc-action.sdPlugin" into your opendeck plugin folder and restart.
+
+then copy the folder named "org.smyck.reaper-osc-action.sdPlugin" into your opendeck plugin folder and restart opendeck.
+
 
 The easiest way to install the plugin is via the [Elgato Marketplace](https://marketplace.elgato.com/product/reaper-osc-action-1bfdb39f-d4b9-4912-b540-b5bcda219de7)
 
