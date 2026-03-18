@@ -6,6 +6,8 @@ Demo Video can be found here: https://www.youtube.com/watch?v=DTwFpP6xsbU
 
 ## Installation
 
+LINUX --> git clone, make, copy org.smyck.reaper..... into plugins folder
+
 The easiest way to install the plugin is via the [Elgato Marketplace](https://marketplace.elgato.com/product/reaper-osc-action-1bfdb39f-d4b9-4912-b540-b5bcda219de7)
 
 If you prefer a manual install you can download the following file from the latest [release](https://github.com/hukl/reaper_osc_action/releases) here on Github:
