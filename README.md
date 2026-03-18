@@ -1,4 +1,4 @@
-# Reaper OSC Action
+# Reaper OSC Action (But for Linux)
 
 This is a Elgato StreamDeck Plugin to send Command IDs to the DAW Reaper via OSC. It is written in Go.
 
